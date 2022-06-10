@@ -1,13 +1,15 @@
 #!/bin/bash
-# My script - sysinfo.sh
-echo '$ ./sysinfo.sh 
-Host Name: neeraj
-Domain Name: 
-Operating System name and version:
-Operating System: Ubuntu 22.04 LTS                
-Kernel: Linux 5.15.0-33-generic
-IP Addresses:
-192.168.140.129 fe80::a3ad:ccb:bd37:fbe8 
-Root Filesystem Status:
-Filesystem      Size  Used Avail Use% Mounted on
-/dev/sda3        20G  8.7G  9.4G  48% /'
+
+# sysinfo.sh - a script to display information about a computer
+
+#Use an output template, with a cat command or something similar that has embedded variables for your report data
+
+echo "
+Report for $(hostname)
+======================
+FQDN: $(hostname -f)
+Operating System name and version: $(lsb_release -d)
+IP Address: $(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
+Root Filesystem Free Space: $(df -h / | grep / | awk '{print $4}')
+======================
+"
